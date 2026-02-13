@@ -1,6 +1,10 @@
 ﻿
 /*
-Main Branch tilll UC7
+Ability to search Person
+in a City or State across
+the multiple Address
+Book - Search Result can show multiple person in
+UC 8 the city or state
  */
 
 using System.Xml.Linq;
@@ -13,6 +17,8 @@ namespace AddressBookSystem
 
         static Dictionary<string, AddressBook> addressBooks = new Dictionary<string, AddressBook>();// dict
         static AddressBook currentAddressBook = null;// new addressbok obj for dict
+
+
 
         static void CreateAddressBook() // creating new addr books in dict
         {
@@ -30,6 +36,8 @@ namespace AddressBookSystem
             Console.WriteLine("Address Book created successfully!");
         }
 
+
+
         static void SelectAddressBook() //method to slect a specfic addr book
         {
             Console.Write("Enter Address Book name to select: ");
@@ -45,6 +53,8 @@ namespace AddressBookSystem
                 Console.WriteLine("Address Book not found.");
             }
         }
+
+
 
 
         static void GetDetails(Contact c) // method to get contact details
@@ -79,6 +89,7 @@ namespace AddressBookSystem
 
         }
 
+        //method to add contact
         static void AddContact()
         {
             if (currentAddressBook == null)
@@ -103,6 +114,7 @@ namespace AddressBookSystem
             }
         }
 
+
         // method to update target contact details
         static void UpdateContact() // passing addressbook obj to modfify contact in it
         {
@@ -126,6 +138,8 @@ namespace AddressBookSystem
             else
                 Console.WriteLine("Contact not found.");
         }
+
+
 
         //method to delete contact 
         static void DeleteContact()
@@ -163,6 +177,8 @@ namespace AddressBookSystem
             currentAddressBook.PrintAddressBook();
         }
 
+
+
         //menu displahy methood
         static void DisplayMenu()
         {
@@ -173,9 +189,66 @@ namespace AddressBookSystem
             Console.WriteLine("4. Edit Contact");
             Console.WriteLine("5. Delete Contact");
             Console.WriteLine("6. Display Contacts");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("7. Search Person by City/State");
+            Console.WriteLine("8. Exit");
             Console.Write("Enter choice: ");
         }
+
+        //method to search by city or state 
+        static void SearchAcrossAddressBooks()
+        {
+            Console.WriteLine("Search By:");
+            Console.WriteLine("1. City");
+            Console.WriteLine("2. State");
+            Console.Write("Enter choice: ");
+
+            if (!int.TryParse(Console.ReadLine(), out int option))
+            {
+                Console.WriteLine("Invalid input.");
+                return;
+            }
+
+            Console.Write("Enter search value: ");
+            string searchValue = Console.ReadLine();
+
+            bool foundAny = false;
+
+            foreach (var entry in addressBooks)
+            {
+                string bookName = entry.Key;
+                AddressBook book = entry.Value;
+
+                List<Contact> results; //list of results for target
+
+                if (option == 1)
+                    results = book.SearchByCity(searchValue);
+                else if (option == 2)
+                    results = book.SearchByState(searchValue);
+                else
+                {
+                    Console.WriteLine("Invalid option.");
+                    return;
+                }
+
+                if (results.Count > 0)
+                {
+                    Console.WriteLine($"\nMatches in Address Book: {bookName}");
+                    foreach (Contact c in results)
+                    {
+                        c.PrintContact();
+                    }
+
+                    foundAny = true;
+                }
+            }
+
+            if (!foundAny)
+            {
+                Console.WriteLine("No matching contacts found across Address Books.");
+            }
+        }
+
+
 
         static void Main(string[] args)
         {
@@ -226,6 +299,10 @@ namespace AddressBookSystem
                         break;
 
                     case 7:
+                        SearchAcrossAddressBooks();
+                        break;
+
+                    case 8:
                         Console.WriteLine("Exiting...");
                         return;
 

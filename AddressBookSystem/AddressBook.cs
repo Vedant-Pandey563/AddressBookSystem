@@ -88,6 +88,37 @@ namespace AddressBookSystem
             return false;
         }
 
+        // city searcher method
+        public List<Contact> SearchByCity(string city)
+        {
+            List<Contact> result = new List<Contact>();
+
+            foreach (Contact c in contacts)
+            {
+                if (c.City.Equals(city, StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Add(c);
+                }
+            }
+
+            return result;
+        }
+
+        //state searcher method 
+        public List<Contact> SearchByState(string state)
+        {
+            List<Contact> result = new List<Contact>();
+
+            foreach (Contact c in contacts)
+            {
+                if (c.State.Equals(state, StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Add(c);
+                }
+            }
+
+            return result;
+        }
 
 
     }
