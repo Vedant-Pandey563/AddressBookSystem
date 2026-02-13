@@ -1,10 +1,6 @@
 ﻿
 /*
-Ability to search Person
-in a City or State across
-the multiple Address
-Book - Search Result can show multiple person in
-UC 8 the city or state
+Main till UC8
  */
 
 using System.Xml.Linq;
