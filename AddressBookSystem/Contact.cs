@@ -30,7 +30,7 @@ namespace AddressBookSystem
 
         public void PrintContact()
         {
-            Console.WriteLine("Contact Details:");
+            Console.WriteLine(" Details: ");
             Console.WriteLine($"First Name  : {FirstName}");
             Console.WriteLine($"Last Name   : {LastName}");
             Console.WriteLine($"Address     : {Address}");
@@ -39,6 +39,7 @@ namespace AddressBookSystem
             Console.WriteLine($"Zip Code    : {ZipCode}");
             Console.WriteLine($"Phone Number: {PhoneNumber}");
             Console.WriteLine($"Email Id    : {EmailId}");
+            Console.WriteLine();
         }
 
     }

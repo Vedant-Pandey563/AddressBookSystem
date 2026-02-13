@@ -25,9 +25,12 @@ namespace AddressBookSystem
                 Console.WriteLine("Address Book is Empty");
                 return ;
             }
-            foreach(Contact c in contacts)
+            int i = 1;
+            foreach (Contact c in contacts)
             {
+                Console.Write("Contact No. "+i);
                 c.PrintContact();
+                i++;
             }
         }
 
