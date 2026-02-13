@@ -42,5 +42,23 @@ namespace AddressBookSystem
             Console.WriteLine();
         }
 
+        //equals overide method 
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Contact)) // not an obj edge case check
+                return false;
+
+            Contact other = (Contact)obj; // cast obj to contacttype
+
+            return this.FirstName.Equals(other.FirstName, StringComparison.OrdinalIgnoreCase) // compare both first and last name 
+                && this.LastName.Equals(other.LastName, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public override int GetHashCode()
+        {
+            return (FirstName.ToLower() + LastName.ToLower()).GetHashCode(); // dict hash code
+        }
+
+
     }
 }

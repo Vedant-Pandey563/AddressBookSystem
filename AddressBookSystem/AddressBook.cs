@@ -15,13 +15,9 @@ namespace AddressBookSystem
 
         public bool AddContact(Contact contact) //add conctact method
         {
-            foreach (Contact existing in contacts)
+            if (contacts.Contains(contact)) // conatains uses equals which is overriden
             {
-                if (existing.PhoneNumber.Equals(contact.PhoneNumber, StringComparison.OrdinalIgnoreCase) ||
-                    existing.EmailId.Equals(contact.EmailId, StringComparison.OrdinalIgnoreCase)) // checking if same phone number or emailid exists
-                {
-                    return false; // Duplicate found
-                }
+                return false; 
             }
 
             contacts.Add(contact);
