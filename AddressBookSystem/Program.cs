@@ -1,12 +1,6 @@
 ﻿
 /*
-UC9
-Ability to view Persons 
-by City or State
-- Maintain Dictionary of City and Person as
-well as State and Person
-- Use Collection Library to maintain
-Dictionary
+Main tillUC9
  */
 
 using System.Xml.Linq;
