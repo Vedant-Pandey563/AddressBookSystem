@@ -103,8 +103,17 @@ namespace AddressBookSystem
             Console.WriteLine("Enter Contact Details");
             Contact c = new Contact("", "", "", "", "", "", "", "");
             GetDetails(c);
-            addressBook.AddContact(c);
-            Console.WriteLine("Contact Addedd Successfully !");
+
+            bool isAdded = addressBook.AddContact(c);
+
+            if (isAdded)
+            {
+                Console.WriteLine("Contact added successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Duplicate contact found! Phone number or Email already exists.");
+            }
         }
 
         static void Main(string[] args)

@@ -13,9 +13,20 @@ namespace AddressBookSystem
             contacts = new List<Contact>();
         }
 
-        public void AddContact(Contact contact) //add conctact method
+        public bool AddContact(Contact contact) //add conctact method
         {
+            foreach (Contact existing in contacts)
+            {
+                if (existing.PhoneNumber.Equals(contact.PhoneNumber, StringComparison.OrdinalIgnoreCase) ||
+                    existing.EmailId.Equals(contact.EmailId, StringComparison.OrdinalIgnoreCase)) // checking if same phone number or emailid exists
+                {
+                    return false; // Duplicate found
+                }
+            }
+
             contacts.Add(contact);
+            return true;
+
         }
 
         public void PrintAddressBook() //print contacts from list
