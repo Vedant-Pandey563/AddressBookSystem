@@ -17,7 +17,7 @@ namespace AddressBookSystem
         {
             if (contacts.Contains(contact)) // conatains uses equals which is overriden
             {
-                return false; 
+                return false;
             }
 
             contacts.Add(contact);
@@ -27,37 +27,26 @@ namespace AddressBookSystem
 
         public void PrintAddressBook() //print contacts from list
         {
-            if(contacts.Count == 0)
+            if (contacts.Count == 0)
             {
                 Console.WriteLine("Address Book is Empty");
-                return ;
+                return;
             }
             int i = 1;
             foreach (Contact c in contacts)
             {
-                Console.Write("Contact No. "+i);
+                Console.Write("Contact No. " + i);
                 c.PrintContact();
                 i++;
             }
         }
 
-        public bool inList(string targetName)
-        {
-            foreach(Contact c in contacts)
-            {
-                if(c.FirstName == targetName)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        //removed inList merthod , no use
         public bool EditContact(string targetName, Contact updatedContact)
         {
-            foreach(Contact c in contacts)
+            foreach (Contact c in contacts)
             {
-                if(c.FirstName.Equals(targetName, StringComparison.OrdinalIgnoreCase))
+                if (c.FirstName.Equals(targetName, StringComparison.OrdinalIgnoreCase))
                 {
                     c.LastName = updatedContact.LastName;
                     c.Address = updatedContact.Address;
@@ -76,7 +65,7 @@ namespace AddressBookSystem
 
         public bool DeleteContact(string targetName)
         {
-            for(int i=0;i<contacts.Count;i++)//foreach loop gives synatx error
+            for (int i = 0; i < contacts.Count; i++)//foreach loop gives synatx error
             {
                 if (contacts[i].FirstName.Equals(targetName, StringComparison.OrdinalIgnoreCase))
                 {
