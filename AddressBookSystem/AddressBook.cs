@@ -8,9 +8,15 @@ namespace AddressBookSystem
     {
         private List<Contact> contacts; // creat list
 
+        //dicts of city and state
+        private Dictionary<string, List<Contact>> cityDictionary;
+        private Dictionary<string, List<Contact>> stateDictionary;
+
         public AddressBook() //address book constructor
         {
             contacts = new List<Contact>();
+            cityDictionary = new Dictionary<string, List<Contact>>();
+            stateDictionary = new Dictionary<string, List<Contact>>();
         }
 
         public bool AddContact(Contact contact) //add conctact method
@@ -21,6 +27,18 @@ namespace AddressBookSystem
             }
 
             contacts.Add(contact);
+            //update city dict
+            if (!cityDictionary.ContainsKey(contact.City))
+            {
+                cityDictionary[contact.City] = new List<Contact>();
+            }
+            cityDictionary[contact.City].Add(contact);
+            //update state dict 
+            if (!stateDictionary.ContainsKey(contact.State))
+            {
+                stateDictionary[contact.State] = new List<Contact>();
+            }
+            stateDictionary[contact.State].Add(contact);
             return true;
 
         }
@@ -41,24 +59,54 @@ namespace AddressBookSystem
             }
         }
 
-        public bool inList(string targetName)
+        //method to print contacts by cities
+        public void ViewByCity(string city)
         {
-            foreach(Contact c in contacts)
+            if (cityDictionary.ContainsKey(city))
             {
-                if(c.FirstName == targetName)
+                foreach (Contact c in cityDictionary[city])
                 {
-                    return true;
+                    c.PrintContact();
                 }
             }
-
-            return false;
+            else
+            {
+                Console.WriteLine("No contacts found in this city.");
+            }
         }
+
+        //same for states 
+        public void ViewByState(string state)
+        {
+            if (stateDictionary.ContainsKey(state))
+            {
+                foreach (Contact c in stateDictionary[state])
+                {
+                    c.PrintContact();
+                }
+            }
+            else
+            {
+                Console.WriteLine("No contacts found in this state.");
+            }
+        }
+
+
+        // inlist method removed , but how it is there in uc8,9 but not in uc7 
+        //should recheck
         public bool EditContact(string targetName, Contact updatedContact)
         {
             foreach (Contact c in contacts)
             {
                 if (c.FirstName.Equals(targetName, StringComparison.OrdinalIgnoreCase))
                 {
+
+
+                    //remove old dict entries for city,state 
+                    cityDictionary[c.City].Remove(c);
+                    stateDictionary[c.State].Remove(c);
+
+                    //now update
                     c.LastName = updatedContact.LastName;
                     c.Address = updatedContact.Address;
                     c.City = updatedContact.City;
@@ -66,6 +114,15 @@ namespace AddressBookSystem
                     c.ZipCode = updatedContact.ZipCode;
                     c.PhoneNumber = updatedContact.PhoneNumber;
                     c.EmailId = updatedContact.EmailId;
+
+                    //now add updated back to dicts 
+                    if (!cityDictionary.ContainsKey(c.City))
+                        cityDictionary[c.City] = new List<Contact>();
+                    cityDictionary[c.City].Add(c);
+
+                    if (!stateDictionary.ContainsKey(c.State))
+                        stateDictionary[c.State] = new List<Contact>();
+                    stateDictionary[c.State].Add(c);
 
                     return true;
                 }
@@ -80,6 +137,9 @@ namespace AddressBookSystem
             {
                 if (contacts[i].FirstName.Equals(targetName, StringComparison.OrdinalIgnoreCase))
                 {
+                    Contact c = contacts[i];
+                    cityDictionary[c.City].Remove(c);
+                    stateDictionary[c.State].Remove(c);
                     contacts.RemoveAt(i);
                     return true;
                 }

@@ -1,6 +1,12 @@
 ﻿
 /*
-Main till UC8
+UC9
+Ability to view Persons 
+by City or State
+- Maintain Dictionary of City and Person as
+well as State and Person
+- Use Collection Library to maintain
+Dictionary
  */
 
 using System.Xml.Linq;
@@ -185,64 +191,15 @@ namespace AddressBookSystem
             Console.WriteLine("4. Edit Contact");
             Console.WriteLine("5. Delete Contact");
             Console.WriteLine("6. Display Contacts");
-            Console.WriteLine("7. Search Person by City/State");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("7. View Persons by City");
+            Console.WriteLine("8. View Persons by State");
+            Console.WriteLine("9. Exit");
+
             Console.Write("Enter choice: ");
         }
 
-        //method to search by city or state 
-        static void SearchAcrossAddressBooks()
-        {
-            Console.WriteLine("Search By:");
-            Console.WriteLine("1. City");
-            Console.WriteLine("2. State");
-            Console.Write("Enter choice: ");
+        // remvoed method SearchAcrossAddressBooks to search by city or state  
 
-            if (!int.TryParse(Console.ReadLine(), out int option))
-            {
-                Console.WriteLine("Invalid input.");
-                return;
-            }
-
-            Console.Write("Enter search value: ");
-            string searchValue = Console.ReadLine();
-
-            bool foundAny = false;
-
-            foreach (var entry in addressBooks)
-            {
-                string bookName = entry.Key;
-                AddressBook book = entry.Value;
-
-                List<Contact> results; //list of results for target
-
-                if (option == 1)
-                    results = book.SearchByCity(searchValue);
-                else if (option == 2)
-                    results = book.SearchByState(searchValue);
-                else
-                {
-                    Console.WriteLine("Invalid option.");
-                    return;
-                }
-
-                if (results.Count > 0)
-                {
-                    Console.WriteLine($"\nMatches in Address Book: {bookName}");
-                    foreach (Contact c in results)
-                    {
-                        c.PrintContact();
-                    }
-
-                    foundAny = true;
-                }
-            }
-
-            if (!foundAny)
-            {
-                Console.WriteLine("No matching contacts found across Address Books.");
-            }
-        }
 
 
 
@@ -254,7 +211,7 @@ namespace AddressBookSystem
 
 
 
-            AddressBook addressBook = new AddressBook();
+            // no use anymore AddressBook addressBook = new AddressBook();
 
             //switch nested in while menu
 
@@ -295,12 +252,33 @@ namespace AddressBookSystem
                         break;
 
                     case 7:
-                        SearchAcrossAddressBooks();
+                        if (currentAddressBook == null)
+                        {
+                            Console.WriteLine("Please select an Address Book first.");
+                            break;
+                        }
+
+                        Console.Write("Enter City: ");
+                        string city = Console.ReadLine();
+                        currentAddressBook.ViewByCity(city);
                         break;
 
                     case 8:
+                        if (currentAddressBook == null)
+                        {
+                            Console.WriteLine("Please select an Address Book first.");
+                            break;
+                        }
+
+                        Console.Write("Enter State: ");
+                        string state = Console.ReadLine();
+                        currentAddressBook.ViewByState(state);
+                        break;
+
+                    case 9:
                         Console.WriteLine("Exiting...");
                         return;
+
 
                     default:
                         Console.WriteLine("Invalid choice.");
