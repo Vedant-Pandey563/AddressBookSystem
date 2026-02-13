@@ -1,7 +1,8 @@
 ﻿
 /*
- * Main Branch
- * 
+Ability to delete a
+person using
+person's name - Use Console to delete a person
  */
 
 namespace AddressBookSystem
@@ -45,22 +46,47 @@ namespace AddressBookSystem
             Console.WriteLine("Enter name of target contact : ");
             string target = Console.ReadLine();
 
-            Contact tempContact = new Contact(target, "", "", "", "", "", "", "");
-            GetDetails(tempContact);
-
-            bool isUpdated = addressBook.EditContact(target, tempContact);
-
-            if (isUpdated)
+            bool checkName = addressBook.inList(target);
+            if (checkName)
             {
-                Console.WriteLine("\nContact updated successfully!");
+                Contact tempContact = new Contact(target, "", "", "", "", "", "", "");
+                GetDetails(tempContact);
+
+                bool isUpdated = addressBook.EditContact(target, tempContact);
+
+                if (isUpdated)
+                {
+                    Console.WriteLine("\nContact updated successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("\nContact not found.");
+                }
             }
             else
             {
                 Console.WriteLine("\nContact not found.");
             }
-
-
         }
+
+        //method to delete contact 
+        static void DeleteContact(AddressBook addressBook)
+        {
+            Console.Write("Enter First Name of Contact to Delete: ");
+            string nameToDelete = Console.ReadLine();
+
+            bool isDeleted = addressBook.DeleteContact(nameToDelete);
+
+            if (isDeleted)
+            {
+                Console.WriteLine("Contact deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Contact not found.");
+            }
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Address Book System");
@@ -76,13 +102,20 @@ namespace AddressBookSystem
             Console.WriteLine();
 
             addressBook.AddContact(c);
+       
 
             Console.WriteLine("Contact added successfully to Address Book.");
             addressBook.PrintAddressBook();
+            Console.WriteLine();
 
             UpdateContact(addressBook);
 
             addressBook.PrintAddressBook();
+            Console.WriteLine();
+
+            DeleteContact(addressBook);
+            addressBook.PrintAddressBook();
+            Console.WriteLine();
 
 
         }
