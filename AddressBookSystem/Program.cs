@@ -1,13 +1,52 @@
 ﻿
 /*
-Main Branch till UC6
+Main Branch tilll UC6
  */
+
+using System.Xml.Linq;
 
 namespace AddressBookSystem
 {
 
     internal class Program
     {
+
+        static Dictionary<string, AddressBook> addressBooks = new Dictionary<string, AddressBook>();// dict
+        static AddressBook currentAddressBook = null;// new addressbok obj for dict
+
+        static void CreateAddressBook() // creating new addr books in dict
+        {
+            Console.Write("Enter new Address Book name: ");
+            string name = Console.ReadLine();
+
+            // Check for no copy of addr book name
+            if (addressBooks.ContainsKey(name))
+            {
+                Console.WriteLine("Address Book with this name already exists.");
+                return;
+            }
+
+            addressBooks[name] = new AddressBook();
+            Console.WriteLine("Address Book created successfully!");
+        }
+
+        static void SelectAddressBook() //method to slect a specfic addr book
+        {
+            Console.Write("Enter Address Book name to select: ");
+            string name = Console.ReadLine();
+
+            if (addressBooks.ContainsKey(name))
+            {
+                currentAddressBook = addressBooks[name];
+                Console.WriteLine($"Address Book '{name}' selected.");
+            }
+            else
+            {
+                Console.WriteLine("Address Book not found.");
+            }
+        }
+
+
         static void GetDetails(Contact c) // method to get contact details
         {
             Console.WriteLine("Please enter Contact Details");
@@ -40,42 +79,67 @@ namespace AddressBookSystem
 
         }
 
-        // method to update target contact details
-        static void UpdateContact(AddressBook addressBook) // passing addressbook obj to modfify contact in it
+        static void AddContact()
         {
-            Console.WriteLine("Enter First name of target contact : ");
-            string target = Console.ReadLine();
-
-            bool checkName = addressBook.inList(target);
-            if (checkName)
+            if (currentAddressBook == null)
             {
-                Contact tempContact = new Contact(target, "", "", "", "", "", "", "");
-                GetDetails(tempContact);
+                Console.WriteLine("Please select an Address Book first.");
+                return;
+            }
 
-                bool isUpdated = addressBook.EditContact(target, tempContact);
+            Console.WriteLine("Enter Contact Details");
+            Contact c = new Contact("", "", "", "", "", "", "", "");
+            GetDetails(c);
 
-                if (isUpdated)
-                {
-                    Console.WriteLine("\nContact updated successfully!");
-                }
-                else
-                {
-                    Console.WriteLine("\nContact not found.");
-                }
+            bool isAdded = currentAddressBook.AddContact(c);
+
+            if (isAdded)
+            {
+                Console.WriteLine("Contact added successfully!");
             }
             else
             {
-                Console.WriteLine("\nContact not found.");
+                Console.WriteLine("Duplicate contact found! Phone number or Email already exists.");
             }
         }
 
-        //method to delete contact 
-        static void DeleteContact(AddressBook addressBook)
+        // method to update target contact details
+        static void UpdateContact() // passing addressbook obj to modfify contact in it
         {
+            if (currentAddressBook == null)
+            {
+                Console.WriteLine("Please select an Address Book first.");
+                return;
+            }
+
+
+            Console.Write("Enter First Name of Contact to Edit: ");
+            string target = Console.ReadLine();
+
+            Contact updated = new Contact(target, "", "", "", "", "", "", "");
+            GetDetails(updated);
+
+            bool isUpdated = currentAddressBook.EditContact(target, updated);
+
+            if (isUpdated)
+                Console.WriteLine("Contact updated successfully!");
+            else
+                Console.WriteLine("Contact not found.");
+        }
+
+        //method to delete contact 
+        static void DeleteContact()
+        {
+            if (currentAddressBook == null)
+            {
+                Console.WriteLine("Please select an Address Book first.");
+                return;
+            }
+
             Console.Write("Enter First Name of Contact to Delete: ");
             string nameToDelete = Console.ReadLine();
 
-            bool isDeleted = addressBook.DeleteContact(nameToDelete);
+            bool isDeleted = currentAddressBook.DeleteContact(nameToDelete);
 
             if (isDeleted)
             {
@@ -87,33 +151,30 @@ namespace AddressBookSystem
             }
         }
 
+        // method to display contacts in a addr book
+        static void DisplayContacts()
+        {
+            if (currentAddressBook == null)
+            {
+                Console.WriteLine("Please select an Address Book first.");
+                return;
+            }
+
+            currentAddressBook.PrintAddressBook();
+        }
+
+        //menu displahy methood
         static void DisplayMenu()
         {
             Console.WriteLine("\n Address Book Menu");
-            Console.WriteLine("1. Add Contact");
-            Console.WriteLine("2. Edit Contact");
-            Console.WriteLine("3. Delete Contact");
-            Console.WriteLine("4. Display Address Book");
-            Console.WriteLine("5. Exit");
-            Console.Write("Enter your choice: ");
-        }
-
-        static void AddContact(AddressBook addressBook)
-        {
-            Console.WriteLine("Enter Contact Details");
-            Contact c = new Contact("", "", "", "", "", "", "", "");
-            GetDetails(c);
-
-            bool isAdded = addressBook.AddContact(c);
-
-            if (isAdded)
-            {
-                Console.WriteLine("Contact added successfully!");
-            }
-            else
-            {
-                Console.WriteLine("Duplicate contact found! Phone number or Email already exists.");
-            }
+            Console.WriteLine("1. Create Address Book");
+            Console.WriteLine("2. Select Address Book");
+            Console.WriteLine("3. Add Contact");
+            Console.WriteLine("4. Edit Contact");
+            Console.WriteLine("5. Delete Contact");
+            Console.WriteLine("6. Display Contacts");
+            Console.WriteLine("7. Exit");
+            Console.Write("Enter choice: ");
         }
 
         static void Main(string[] args)
@@ -141,27 +202,35 @@ namespace AddressBookSystem
                 switch (choice)
                 {
                     case 1:
-                        AddContact(addressBook);
+                        CreateAddressBook();
                         break;
 
                     case 2:
-                        UpdateContact(addressBook);
+                        SelectAddressBook();
                         break;
 
                     case 3:
-                        DeleteContact(addressBook);
+                        AddContact();
                         break;
 
                     case 4:
-                        addressBook.PrintAddressBook();
+                        UpdateContact();
                         break;
 
                     case 5:
-                        Console.WriteLine("Exiting program...");
+                        DeleteContact();
+                        break;
+
+                    case 6:
+                        DisplayContacts();
+                        break;
+
+                    case 7:
+                        Console.WriteLine("Exiting...");
                         return;
 
                     default:
-                        Console.WriteLine("Invalid choice. Try again.");
+                        Console.WriteLine("Invalid choice.");
                         break;
                 }
 
