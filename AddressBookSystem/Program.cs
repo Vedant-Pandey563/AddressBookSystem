@@ -1,6 +1,12 @@
 ﻿
 /*
- * Main Branch
+ * Ability to add a new
+Contact to Address Book
+- Use Console to add person details from
+AddressBookMain class
+- Use Object Oriented Concepts to manage
+relationship between AddressBook and Contact
+Person
  */
 
 namespace AddressBookSystem
@@ -11,8 +17,6 @@ namespace AddressBookSystem
         static void Main(string[] args)
         {
             Console.WriteLine("Address Book System");
-
-            
 
             Console.WriteLine("Please enter Contact Details");
 
@@ -48,12 +52,15 @@ namespace AddressBookSystem
             string emailId = Console.ReadLine();
             Console.WriteLine();
 
+            AddressBook addressBook = new AddressBook();
             Contact c = new Contact(firstName, lastName, address, city, state, zipCode, phoneNumber, emailId);
             Console.WriteLine();
             Console.WriteLine("Created Contact Succesfully");
             Console.WriteLine();
 
-            c.PrintContact();
+            addressBook.AddContact(c);
+            Console.WriteLine("Contact added successfully to Address Book.");
+            addressBook.PrintAddressBook();
 
 
         }
