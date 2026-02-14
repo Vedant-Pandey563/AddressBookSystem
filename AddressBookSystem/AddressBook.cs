@@ -180,6 +180,24 @@ namespace AddressBookSystem
             return result;
         }
 
+        //count of city 
+        public int GetCountByCity(string city)
+        {
+            if (cityDictionary.ContainsKey(city))
+                return cityDictionary[city].Count;
+
+            return 0;
+        }
+
+        //count of state 
+        public int GetCountByState(string state)
+        {
+            if (stateDictionary.ContainsKey(state))
+                return stateDictionary[state].Count;
+
+            return 0;
+        }
+
 
     }
 }

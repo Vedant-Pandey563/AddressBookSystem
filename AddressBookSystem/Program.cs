@@ -1,9 +1,12 @@
 ﻿
 /*
-Main tillUC9
+    uc10 
+    Ability to get number
+of contact persons
+i.e. count by City or
+State - Search Result will show count by city  and by state
  */
 
-using System.Xml.Linq;
 
 namespace AddressBookSystem
 {
@@ -187,7 +190,9 @@ namespace AddressBookSystem
             Console.WriteLine("6. Display Contacts");
             Console.WriteLine("7. View Persons by City");
             Console.WriteLine("8. View Persons by State");
-            Console.WriteLine("9. Exit");
+            Console.WriteLine("9. Count Persons by City");
+            Console.WriteLine("10. Count Persons by State");
+            Console.WriteLine("11. Exit");
 
             Console.Write("Enter choice: ");
         }
@@ -270,9 +275,34 @@ namespace AddressBookSystem
                         break;
 
                     case 9:
+                        if (currentAddressBook == null)
+                        {
+                            Console.WriteLine("Please select an Address Book first.");
+                            break;
+                        }
+
+                        Console.Write("Enter City: ");
+                        string cityCount = Console.ReadLine();
+                        int cityTotal = currentAddressBook.GetCountByCity(cityCount);
+                        Console.WriteLine($"Total persons in city '{cityCount}': {cityTotal}");
+                        break;
+
+                    case 10:
+                        if (currentAddressBook == null)
+                        {
+                            Console.WriteLine("Please select an Address Book first.");
+                            break;
+                        }
+
+                        Console.Write("Enter State: ");
+                        string stateCount = Console.ReadLine();
+                        int stateTotal = currentAddressBook.GetCountByState(stateCount);
+                        Console.WriteLine($"Total persons in state '{stateCount}': {stateTotal}");
+                        break;
+
+                    case 11:
                         Console.WriteLine("Exiting...");
                         return;
-
 
                     default:
                         Console.WriteLine("Invalid choice.");
