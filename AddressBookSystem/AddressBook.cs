@@ -198,6 +198,20 @@ namespace AddressBookSystem
             return 0;
         }
 
+        //sort by name 
+        public void SortByName()
+        {
+            contacts.Sort((c1, c2) =>
+                string.Compare(c1.FirstName, c2.FirstName, StringComparison.OrdinalIgnoreCase));
+
+            Console.WriteLine("Contacts sorted alphabetically by First Name:\n");
+
+            foreach (Contact c in contacts)
+            {
+                Console.WriteLine(c); // Uses ToString()
+            }
+        }
+
 
     }
 }

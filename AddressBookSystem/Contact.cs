@@ -54,6 +54,14 @@ namespace AddressBookSystem
                 && this.LastName.Equals(other.LastName, StringComparison.OrdinalIgnoreCase);
         }
 
+        //tostring overdide method 
+        public override string ToString()
+        {
+            return $"Name: {FirstName} {LastName}\n" +
+                   $"Address: {Address}, {City}, {State}, {ZipCode}\n" +
+                   $"Phone: {PhoneNumber}\n" +
+                   $"Email: {EmailId}\n";
+        }
         public override int GetHashCode()
         {
             return (FirstName.ToLower() + LastName.ToLower()).GetHashCode(); // dict hash code

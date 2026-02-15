@@ -1,6 +1,13 @@
 ﻿
 /*
-    Main till uc10 
+UC11   
+Ability to sort the entries in the
+address book alphabetically by
+Person’s name
+- Use Console to sort person details by name
+- Use Collection Library for Sorting
+- Override toString method to finally Print Person Entry in
+Concole
  */
 
 
@@ -188,7 +195,8 @@ namespace AddressBookSystem
             Console.WriteLine("8. View Persons by State");
             Console.WriteLine("9. Count Persons by City");
             Console.WriteLine("10. Count Persons by State");
-            Console.WriteLine("11. Exit");
+            Console.WriteLine("11. Sort Contacts by Name");
+            Console.WriteLine("12. Exit");
 
             Console.Write("Enter choice: ");
         }
@@ -297,6 +305,16 @@ namespace AddressBookSystem
                         break;
 
                     case 11:
+                        if (currentAddressBook == null)
+                        {
+                            Console.WriteLine("Please select an Address Book first.");
+                            break;
+                        }
+
+                        currentAddressBook.SortByName();
+                        break;
+
+                    case 12:
                         Console.WriteLine("Exiting...");
                         return;
 
