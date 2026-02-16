@@ -212,6 +212,45 @@ namespace AddressBookSystem
             }
         }
 
+        public void SortByCity()
+        {
+            contacts.Sort((c1, c2) =>
+                string.Compare(c1.City, c2.City, StringComparison.OrdinalIgnoreCase));
+
+            Console.WriteLine("\nContacts sorted by City:\n");
+
+            foreach (Contact c in contacts)
+            {
+                Console.WriteLine(c); // uses ToString()
+            }
+        }
+
+        public void SortByState()
+        {
+            contacts.Sort((c1, c2) =>
+                string.Compare(c1.State, c2.State, StringComparison.OrdinalIgnoreCase));
+
+            Console.WriteLine("\nContacts sorted by State:\n");
+
+            foreach (Contact c in contacts)
+            {
+                Console.WriteLine(c);
+            }
+        }
+
+        public void SortByZip()
+        {
+            contacts.Sort((c1, c2) =>
+                string.Compare(c1.ZipCode, c2.ZipCode, StringComparison.OrdinalIgnoreCase));
+
+            Console.WriteLine("\nContacts sorted by Zip Code:\n");
+
+            foreach (Contact c in contacts)
+            {
+                Console.WriteLine(c);
+            }
+        }
+
 
     }
 }

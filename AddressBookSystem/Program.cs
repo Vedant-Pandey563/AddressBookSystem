@@ -189,7 +189,10 @@ namespace AddressBookSystem
             Console.WriteLine("9. Count Persons by City");
             Console.WriteLine("10. Count Persons by State");
             Console.WriteLine("11. Sort Contacts by Name");
-            Console.WriteLine("12. Exit");
+            Console.WriteLine("12. Sort Contacts by City");
+            Console.WriteLine("13. Sort Contacts by State");
+            Console.WriteLine("14. Sort Contacts by Zip");
+            Console.WriteLine("15. Exit");
 
             Console.Write("Enter choice: ");
         }
@@ -308,6 +311,33 @@ namespace AddressBookSystem
                         break;
 
                     case 12:
+                        if (currentAddressBook == null)
+                        {
+                            Console.WriteLine("Select Address Book first.");
+                            break;
+                        }
+                        currentAddressBook.SortByCity();
+                        break;
+
+                    case 13:
+                        if (currentAddressBook == null)
+                        {
+                            Console.WriteLine("Select Address Book first.");
+                            break;
+                        }
+                        currentAddressBook.SortByState();
+                        break;
+
+                    case 14:
+                        if (currentAddressBook == null)
+                        {
+                            Console.WriteLine("Select Address Book first.");
+                            break;
+                        }
+                        currentAddressBook.SortByZip();
+                        break;
+
+                    case 15:
                         Console.WriteLine("Exiting...");
                         return;
 
