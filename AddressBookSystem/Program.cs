@@ -1,18 +1,22 @@
-<<<<<<< HEAD
-﻿
+
+
 /*
-main till UC12 
+UC13
+Ability to Read or Write
+the Address Book with
+Persons Contact into a
+File using File IO
  */
 
 
 namespace AddressBookSystem
-=======
-﻿namespace AddressBookSystem
->>>>>>> UC12
+
+
 {
     internal class Program
     {
         static AddressBookManager manager = new AddressBookManager();
+        static AddressBookController controller = new AddressBookController(manager);
 
         static void Main(string[] args)
         {
@@ -30,71 +34,27 @@ namespace AddressBookSystem
 
                 switch (choice)
                 {
-                    case 1:
-                        CreateAddressBook();
-                        break;
-
-                    case 2:
-                        SelectAddressBook();
-                        break;
-
-                    case 3:
-                        AddContact();
-                        break;
-
-                    case 4:
-                        EditContact();
-                        break;
-
-                    case 5:
-                        DeleteContact();
-                        break;
-
-                    case 6:
-                        DisplayContacts();
-                        break;
-
-                    case 7:
-                        ViewByCity();
-                        break;
-
-                    case 8:
-                        ViewByState();
-                        break;
-
-                    case 9:
-                        CountByCity();
-                        break;
-
-                    case 10:
-                        CountByState();
-                        break;
-
-                    case 11:
-                        SortByName();
-                        break;
-
-                    case 12:
-                        SortByCity();
-                        break;
-
-                    case 13:
-                        SortByState();
-                        break;
-
-                    case 14:
-                        SortByZip();
-                        break;
-
-                    case 15:
-                        return;
-
-                    default:
-                        Console.WriteLine("Invalid choice.");
-                        break;
+                    case 1: controller.CreateAddressBook(); break;
+                    case 2: controller.SelectAddressBook(); break;
+                    case 3: controller.AddContact(); break;
+                    case 4: controller.EditContact(); break;
+                    case 5: controller.DeleteContact(); break;
+                    case 6: controller.DisplayContacts(); break;
+                    case 7: controller.ViewByCity(); break;
+                    case 8: controller.ViewByState(); break;
+                    case 9: controller.CountByCity(); break;
+                    case 10: controller.CountByState(); break;
+                    case 11: controller.SortByName(); break;
+                    case 12: controller.SortByCity(); break;
+                    case 13: controller.SortByState(); break;
+                    case 14: controller.SortByZip(); break;
+                    case 15: controller.SaveToFile(); break;
+                    case 16: controller.LoadFromFile(); break;
+                    case 17: return;
                 }
             }
         }
+
 
         // menu
 
@@ -115,7 +75,9 @@ namespace AddressBookSystem
             Console.WriteLine("12. Sort by City");
             Console.WriteLine("13. Sort by State");
             Console.WriteLine("14. Sort by Zip");
-            Console.WriteLine("15. Exit");
+            Console.WriteLine("15. Save to File");
+            Console.WriteLine("16. Load from File");
+            Console.WriteLine("17. Exit");
         }
 
         // helper func
@@ -126,159 +88,6 @@ namespace AddressBookSystem
             if (book == null)
                 Console.WriteLine("Select Address Book first.");
             return book;
-        }
-
-        // operations 
-
-        static void CreateAddressBook()
-        {
-            Console.Write("Enter name: ");
-            string name = Console.ReadLine();
-
-            Console.WriteLine(manager.CreateAddressBook(name)
-                ? "Created."
-                : "Already exists.");
-        }
-
-        static void SelectAddressBook()
-        {
-            Console.Write("Enter name: ");
-            string name = Console.ReadLine();
-
-            Console.WriteLine(manager.SelectAddressBook(name)
-                ? "Selected."
-                : "Not found.");
-        }
-
-        static void AddContact()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            Contact c = ContactInputService.ReadContact();
-
-            Console.WriteLine(book.AddContact(c)
-                ? "Added."
-                : "Duplicate contact.");
-        }
-
-        static void EditContact()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            Console.Write("Enter First Name: ");
-            string name = Console.ReadLine();
-
-            Contact updated = ContactInputService.ReadContact();
-
-            Console.WriteLine(book.EditContact(name, updated)
-                ? "Updated."
-                : "Not found.");
-        }
-
-        static void DeleteContact()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            Console.Write("Enter First Name: ");
-            string name = Console.ReadLine();
-
-            Console.WriteLine(book.DeleteContact(name)
-                ? "Deleted."
-                : "Not found.");
-        }
-
-        static void DisplayContacts()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            foreach (var c in book.GetAllContacts())
-                Console.WriteLine(c);
-        }
-
-        static void ViewByCity()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            Console.Write("City: ");
-            string city = Console.ReadLine();
-
-            foreach (var c in book.GetByCity(city))
-                Console.WriteLine(c);
-        }
-
-        static void ViewByState()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            Console.Write("State: ");
-            string state = Console.ReadLine();
-
-            foreach (var c in book.GetByState(state))
-                Console.WriteLine(c);
-        }
-
-        static void CountByCity()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            Console.Write("City: ");
-            string city = Console.ReadLine();
-
-            Console.WriteLine(book.GetCountByCity(city));
-        }
-
-        static void CountByState()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            Console.Write("State: ");
-            string state = Console.ReadLine();
-
-            Console.WriteLine(book.GetCountByState(state));
-        }
-
-        static void SortByName()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            foreach (var c in book.GetSortedByName())
-                Console.WriteLine(c);
-        }
-
-        static void SortByCity()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            foreach (var c in book.GetSortedByCity())
-                Console.WriteLine(c);
-        }
-
-        static void SortByState()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            foreach (var c in book.GetSortedByState())
-                Console.WriteLine(c);
-        }
-
-        static void SortByZip()
-        {
-            var book = GetCurrent();
-            if (book == null) return;
-
-            foreach (var c in book.GetSortedByZip())
-                Console.WriteLine(c);
         }
     }
 }
