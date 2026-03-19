@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿
 /*
 main till UC12 
@@ -5,222 +6,25 @@ main till UC12
 
 
 namespace AddressBookSystem
+=======
+﻿namespace AddressBookSystem
+>>>>>>> UC12
 {
-
     internal class Program
     {
-
-        static Dictionary<string, AddressBook> addressBooks = new Dictionary<string, AddressBook>();// dict
-        static AddressBook currentAddressBook = null;// new addressbok obj for dict
-
-
-
-        static void CreateAddressBook() // creating new addr books in dict
-        {
-            Console.Write("Enter new Address Book name: ");
-            string name = Console.ReadLine();
-
-            // Check for no copy of addr book name
-            if (addressBooks.ContainsKey(name))
-            {
-                Console.WriteLine("Address Book with this name already exists.");
-                return;
-            }
-
-            addressBooks[name] = new AddressBook();
-            Console.WriteLine("Address Book created successfully!");
-        }
-
-
-
-        static void SelectAddressBook() //method to slect a specfic addr book
-        {
-            Console.Write("Enter Address Book name to select: ");
-            string name = Console.ReadLine();
-
-            if (addressBooks.ContainsKey(name))
-            {
-                currentAddressBook = addressBooks[name];
-                Console.WriteLine($"Address Book '{name}' selected.");
-            }
-            else
-            {
-                Console.WriteLine("Address Book not found.");
-            }
-        }
-
-
-
-
-        static void GetDetails(Contact c) // method to get contact details
-        {
-            Console.WriteLine("Please enter Contact Details");
-
-            Console.Write("Enter First Name: ");
-            c.FirstName = Console.ReadLine();
-
-            Console.Write("Enter Last Name: ");
-            c.LastName = Console.ReadLine();
-
-            Console.Write("Enter Address: ");
-            c.Address = Console.ReadLine();
-
-            Console.Write("Enter City Name: ");
-            c.City = Console.ReadLine();
-
-            Console.Write("Enter State Name: ");
-            c.State = Console.ReadLine();
-
-            Console.Write("Enter Zip Code: ");
-            c.ZipCode = Console.ReadLine();
-
-            Console.Write("Enter Phone Number: ");
-            c.PhoneNumber = Console.ReadLine();
-
-            Console.Write("Enter Email Id: ");
-            c.EmailId = Console.ReadLine();
-
-            Console.WriteLine();
-
-        }
-
-        //method to add contact
-        static void AddContact()
-        {
-            if (currentAddressBook == null)
-            {
-                Console.WriteLine("Please select an Address Book first.");
-                return;
-            }
-
-            Console.WriteLine("Enter Contact Details");
-            Contact c = new Contact("", "", "", "", "", "", "", "");
-            GetDetails(c);
-
-            bool isAdded = currentAddressBook.AddContact(c);
-
-            if (isAdded)
-            {
-                Console.WriteLine("Contact added successfully!");
-            }
-            else
-            {
-                Console.WriteLine("Duplicate contact found! Phone number or Email already exists.");
-            }
-        }
-
-
-        // method to update target contact details
-        static void UpdateContact() // passing addressbook obj to modfify contact in it
-        {
-            if (currentAddressBook == null)
-            {
-                Console.WriteLine("Please select an Address Book first.");
-                return;
-            }
-
-
-            Console.Write("Enter First Name of Contact to Edit: ");
-            string target = Console.ReadLine();
-
-            Contact updated = new Contact(target, "", "", "", "", "", "", "");
-            GetDetails(updated);
-
-            bool isUpdated = currentAddressBook.EditContact(target, updated);
-
-            if (isUpdated)
-                Console.WriteLine("Contact updated successfully!");
-            else
-                Console.WriteLine("Contact not found.");
-        }
-
-
-
-        //method to delete contact 
-        static void DeleteContact()
-        {
-            if (currentAddressBook == null)
-            {
-                Console.WriteLine("Please select an Address Book first.");
-                return;
-            }
-
-            Console.Write("Enter First Name of Contact to Delete: ");
-            string nameToDelete = Console.ReadLine();
-
-            bool isDeleted = currentAddressBook.DeleteContact(nameToDelete);
-
-            if (isDeleted)
-            {
-                Console.WriteLine("Contact deleted successfully.");
-            }
-            else
-            {
-                Console.WriteLine("Contact not found.");
-            }
-        }
-
-        // method to display contacts in a addr book
-        static void DisplayContacts()
-        {
-            if (currentAddressBook == null)
-            {
-                Console.WriteLine("Please select an Address Book first.");
-                return;
-            }
-
-            currentAddressBook.PrintAddressBook();
-        }
-
-
-
-        //menu displahy methood
-        static void DisplayMenu()
-        {
-            Console.WriteLine("\n Address Book Menu");
-            Console.WriteLine("1. Create Address Book");
-            Console.WriteLine("2. Select Address Book");
-            Console.WriteLine("3. Add Contact");
-            Console.WriteLine("4. Edit Contact");
-            Console.WriteLine("5. Delete Contact");
-            Console.WriteLine("6. Display Contacts");
-            Console.WriteLine("7. View Persons by City");
-            Console.WriteLine("8. View Persons by State");
-            Console.WriteLine("9. Count Persons by City");
-            Console.WriteLine("10. Count Persons by State");
-            Console.WriteLine("11. Sort Contacts by Name");
-            Console.WriteLine("12. Sort Contacts by City");
-            Console.WriteLine("13. Sort Contacts by State");
-            Console.WriteLine("14. Sort Contacts by Zip");
-            Console.WriteLine("15. Exit");
-
-            Console.Write("Enter choice: ");
-        }
-
-        // remvoed method SearchAcrossAddressBooks to search by city or state  
-
-
-
+        static AddressBookManager manager = new AddressBookManager();
 
         static void Main(string[] args)
         {
             Console.WriteLine("Address Book System");
 
-            //menu with while and nested switch
-
-
-
-            // no use anymore AddressBook addressBook = new AddressBook();
-
-            //switch nested in while menu
-
             while (true)
             {
                 DisplayMenu();
 
-                if (!int.TryParse(Console.ReadLine(), out int choice)) // checck if choice is int or not
+                if (!int.TryParse(Console.ReadLine(), out int choice))
                 {
-                    Console.WriteLine("Invalid input. Please enter a number.");
+                    Console.WriteLine("Invalid input.");
                     continue;
                 }
 
@@ -239,7 +43,7 @@ namespace AddressBookSystem
                         break;
 
                     case 4:
-                        UpdateContact();
+                        EditContact();
                         break;
 
                     case 5:
@@ -251,105 +55,230 @@ namespace AddressBookSystem
                         break;
 
                     case 7:
-                        if (currentAddressBook == null)
-                        {
-                            Console.WriteLine("Please select an Address Book first.");
-                            break;
-                        }
-
-                        Console.Write("Enter City: ");
-                        string city = Console.ReadLine();
-                        currentAddressBook.ViewByCity(city);
+                        ViewByCity();
                         break;
 
                     case 8:
-                        if (currentAddressBook == null)
-                        {
-                            Console.WriteLine("Please select an Address Book first.");
-                            break;
-                        }
-
-                        Console.Write("Enter State: ");
-                        string state = Console.ReadLine();
-                        currentAddressBook.ViewByState(state);
+                        ViewByState();
                         break;
 
                     case 9:
-                        if (currentAddressBook == null)
-                        {
-                            Console.WriteLine("Please select an Address Book first.");
-                            break;
-                        }
-
-                        Console.Write("Enter City: ");
-                        string cityCount = Console.ReadLine();
-                        int cityTotal = currentAddressBook.GetCountByCity(cityCount);
-                        Console.WriteLine($"Total persons in city '{cityCount}': {cityTotal}");
+                        CountByCity();
                         break;
 
                     case 10:
-                        if (currentAddressBook == null)
-                        {
-                            Console.WriteLine("Please select an Address Book first.");
-                            break;
-                        }
-
-                        Console.Write("Enter State: ");
-                        string stateCount = Console.ReadLine();
-                        int stateTotal = currentAddressBook.GetCountByState(stateCount);
-                        Console.WriteLine($"Total persons in state '{stateCount}': {stateTotal}");
+                        CountByState();
                         break;
 
                     case 11:
-                        if (currentAddressBook == null)
-                        {
-                            Console.WriteLine("Please select an Address Book first.");
-                            break;
-                        }
-
-                        currentAddressBook.SortByName();
+                        SortByName();
                         break;
 
                     case 12:
-                        if (currentAddressBook == null)
-                        {
-                            Console.WriteLine("Select Address Book first.");
-                            break;
-                        }
-                        currentAddressBook.SortByCity();
+                        SortByCity();
                         break;
 
                     case 13:
-                        if (currentAddressBook == null)
-                        {
-                            Console.WriteLine("Select Address Book first.");
-                            break;
-                        }
-                        currentAddressBook.SortByState();
+                        SortByState();
                         break;
 
                     case 14:
-                        if (currentAddressBook == null)
-                        {
-                            Console.WriteLine("Select Address Book first.");
-                            break;
-                        }
-                        currentAddressBook.SortByZip();
+                        SortByZip();
                         break;
 
                     case 15:
-                        Console.WriteLine("Exiting...");
                         return;
 
                     default:
                         Console.WriteLine("Invalid choice.");
                         break;
                 }
-
-                Console.WriteLine();
-
-
             }
+        }
+
+        // menu
+
+        static void DisplayMenu()
+        {
+            Console.WriteLine("\n--- MENU ---");
+            Console.WriteLine("1. Create Address Book");
+            Console.WriteLine("2. Select Address Book");
+            Console.WriteLine("3. Add Contact");
+            Console.WriteLine("4. Edit Contact");
+            Console.WriteLine("5. Delete Contact");
+            Console.WriteLine("6. Display Contacts");
+            Console.WriteLine("7. View by City");
+            Console.WriteLine("8. View by State");
+            Console.WriteLine("9. Count by City");
+            Console.WriteLine("10. Count by State");
+            Console.WriteLine("11. Sort by Name");
+            Console.WriteLine("12. Sort by City");
+            Console.WriteLine("13. Sort by State");
+            Console.WriteLine("14. Sort by Zip");
+            Console.WriteLine("15. Exit");
+        }
+
+        // helper func
+
+        static AddressBook GetCurrent()
+        {
+            var book = manager.GetCurrentAddressBook();
+            if (book == null)
+                Console.WriteLine("Select Address Book first.");
+            return book;
+        }
+
+        // operations 
+
+        static void CreateAddressBook()
+        {
+            Console.Write("Enter name: ");
+            string name = Console.ReadLine();
+
+            Console.WriteLine(manager.CreateAddressBook(name)
+                ? "Created."
+                : "Already exists.");
+        }
+
+        static void SelectAddressBook()
+        {
+            Console.Write("Enter name: ");
+            string name = Console.ReadLine();
+
+            Console.WriteLine(manager.SelectAddressBook(name)
+                ? "Selected."
+                : "Not found.");
+        }
+
+        static void AddContact()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            Contact c = ContactInputService.ReadContact();
+
+            Console.WriteLine(book.AddContact(c)
+                ? "Added."
+                : "Duplicate contact.");
+        }
+
+        static void EditContact()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            Console.Write("Enter First Name: ");
+            string name = Console.ReadLine();
+
+            Contact updated = ContactInputService.ReadContact();
+
+            Console.WriteLine(book.EditContact(name, updated)
+                ? "Updated."
+                : "Not found.");
+        }
+
+        static void DeleteContact()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            Console.Write("Enter First Name: ");
+            string name = Console.ReadLine();
+
+            Console.WriteLine(book.DeleteContact(name)
+                ? "Deleted."
+                : "Not found.");
+        }
+
+        static void DisplayContacts()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            foreach (var c in book.GetAllContacts())
+                Console.WriteLine(c);
+        }
+
+        static void ViewByCity()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            Console.Write("City: ");
+            string city = Console.ReadLine();
+
+            foreach (var c in book.GetByCity(city))
+                Console.WriteLine(c);
+        }
+
+        static void ViewByState()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            Console.Write("State: ");
+            string state = Console.ReadLine();
+
+            foreach (var c in book.GetByState(state))
+                Console.WriteLine(c);
+        }
+
+        static void CountByCity()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            Console.Write("City: ");
+            string city = Console.ReadLine();
+
+            Console.WriteLine(book.GetCountByCity(city));
+        }
+
+        static void CountByState()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            Console.Write("State: ");
+            string state = Console.ReadLine();
+
+            Console.WriteLine(book.GetCountByState(state));
+        }
+
+        static void SortByName()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            foreach (var c in book.GetSortedByName())
+                Console.WriteLine(c);
+        }
+
+        static void SortByCity()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            foreach (var c in book.GetSortedByCity())
+                Console.WriteLine(c);
+        }
+
+        static void SortByState()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            foreach (var c in book.GetSortedByState())
+                Console.WriteLine(c);
+        }
+
+        static void SortByZip()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            foreach (var c in book.GetSortedByZip())
+                Console.WriteLine(c);
         }
     }
 }
