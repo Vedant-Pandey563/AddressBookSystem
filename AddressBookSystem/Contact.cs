@@ -15,7 +15,7 @@ namespace AddressBookSystem
         public string PhoneNumber { get; set; }
         public string EmailId { get; set; }
 
-        
+        public Contact() { } // constructor for csv 
         public Contact(string firstName, string lastName, string address, string city, string state, string zipCode, string phoneNumber, string emailId)
         {
             FirstName = firstName;

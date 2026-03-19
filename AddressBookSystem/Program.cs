@@ -30,23 +30,42 @@ namespace AddressBookSystem
 
                 switch (choice)
                 {
-                    case 1: controller.CreateAddressBook(); break;
-                    case 2: controller.SelectAddressBook(); break;
-                    case 3: controller.AddContact(); break;
-                    case 4: controller.EditContact(); break;
-                    case 5: controller.DeleteContact(); break;
-                    case 6: controller.DisplayContacts(); break;
-                    case 7: controller.ViewByCity(); break;
-                    case 8: controller.ViewByState(); break;
-                    case 9: controller.CountByCity(); break;
-                    case 10: controller.CountByState(); break;
-                    case 11: controller.SortByName(); break;
-                    case 12: controller.SortByCity(); break;
-                    case 13: controller.SortByState(); break;
-                    case 14: controller.SortByZip(); break;
-                    case 15: controller.SaveToFile(); break;
-                    case 16: controller.LoadFromFile(); break;
-                    case 17: return;
+                    case 1: controller.CreateAddressBook(); 
+                        break;
+                    case 2: controller.SelectAddressBook(); 
+                        break;
+                    case 3: controller.AddContact(); 
+                        break;
+                    case 4: controller.EditContact(); 
+                        break;
+                    case 5: controller.DeleteContact(); 
+                        break;
+                    case 6: controller.DisplayContacts(); 
+                        break;
+                    case 7: controller.ViewByCity(); 
+                        break;
+                    case 8: controller.ViewByState(); 
+                        break;
+                    case 9: controller.CountByCity(); 
+                        break;
+                    case 10: controller.CountByState(); 
+                        break;
+                    case 11: controller.SortByName(); 
+                        break;
+                    case 12: controller.SortByCity(); 
+                        break;
+                    case 13: controller.SortByState(); 
+                        break;
+                    case 14: controller.SortByZip(); 
+                        break;
+                        break;
+                    case 16: controller.LoadFromFile(); 
+                        break;
+                    case 17: controller.SaveToCsv(); 
+                        break;
+                    case 18: controller.LoadFromCsv(); 
+                        break;
+                    case 19: return;
                 }
             }
         }
@@ -73,7 +92,9 @@ namespace AddressBookSystem
             Console.WriteLine("14. Sort by Zip");
             Console.WriteLine("15. Save to File");
             Console.WriteLine("16. Load from File");
-            Console.WriteLine("17. Exit");
+            Console.WriteLine("17. Save as CSV");
+            Console.WriteLine("18. Load from CSV");
+            Console.WriteLine("19. Exit");
         }
 
         // helper func

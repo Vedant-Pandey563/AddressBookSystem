@@ -209,5 +209,43 @@ namespace AddressBookSystem
                 Console.WriteLine("Address Book already exists.");
             }
         }
+
+        public void SaveToCsv()
+        {
+            var book = GetCurrent();
+            if (book == null) return;
+
+            Console.Write("Enter CSV file path: ");
+            string path = Console.ReadLine();
+
+            CsvFileService.WriteToCsv(book, path);
+        }
+
+        public void LoadFromCsv()
+        {
+            Console.Write("Enter CSV file path: ");
+            string path = Console.ReadLine();
+
+            AddressBook loaded = CsvFileService.ReadFromCsv(path);
+
+            Console.Write("Enter name for Address Book: ");
+            string name = Console.ReadLine();
+
+            if (manager.CreateAddressBook(name))
+            {
+                manager.SelectAddressBook(name);
+
+                foreach (var c in loaded.GetAllContacts())
+                {
+                    manager.GetCurrentAddressBook().AddContact(c);
+                }
+
+                Console.WriteLine("CSV loaded successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Address Book already exists.");
+            }
+        }
     }
 }
